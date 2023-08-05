@@ -1,9 +1,6 @@
-// Импорт модуля mongoose для работы с MongoDB
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-// Определение схемы пользователя с использованием mongoose.Schema
 const userSchema = mongoose.Schema({
-
     // Поле для хранения логина пользователя (тип: строка)
     login: String,
 
@@ -15,10 +12,38 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+
+    // Поле для хранения отзывов пользователя
+    reviews: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', // Ссылка на модель User
+            required: true
+        },
+        text: {
+            type: String,
+            required: true
+        },
+        timestamp: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+
+    // Поле для хранения оценок пользователя
+    score: [{
+        grade: {
+            type: Number,
+            required: true
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', // Ссылка на модель User
+            required: true
+        },
+    }],
 });
 
-// Создание модели "User" на основе определенной схемы
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
-// Экспорт созданной модели для использования в других частях приложения
 module.exports = User;

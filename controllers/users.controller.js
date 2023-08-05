@@ -112,8 +112,6 @@ module.exports.usersController = {
             if (!user) {
                 return res.status(404).json("Пользователь не найден");
             }
-            
-    
             // Преобразование userId в ObjectId
             const userIdObject = mongoose.Types.ObjectId(userId);
     
